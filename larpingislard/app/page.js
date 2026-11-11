@@ -48,6 +48,7 @@ export default function Home() {
   const [alerts, setAlerts] = useState(false);
   const [theme, setTheme] = useState("chat");
   const [shy, setShy] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [hover, setHover] = useState(false);
   const [blur, setBlur] = useState(false);
   const [atBottom, setAtBottom] = useState(true);
@@ -180,13 +181,29 @@ export default function Home() {
 
   if (!session) {
     return (
-      <form className="login" onSubmit={login}>
-        <h2>Sign in</h2>
-        <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button>Sign in</button>
-        {error && <span className="err">{error}</span>}
-      </form>
+      <div className="hero">
+        <button className="logo" onClick={() => setShowLogin((v) => !v)} aria-label="Open">
+          <svg viewBox="0 0 200 200" width="100%" height="100%">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#6366f1" />
+                <stop offset="1" stopColor="#ec4899" />
+              </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="92" fill="url(#g)" />
+            <path d="M60 110 Q100 40 140 110 Q100 150 60 110Z" fill="none" stroke="#fff" strokeWidth="9" strokeLinejoin="round" />
+            <circle cx="100" cy="102" r="12" fill="#fff" />
+          </svg>
+        </button>
+        {showLogin && (
+          <form className="login" onSubmit={login}>
+            <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
+            <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <button>Sign in</button>
+            {error && <span className="err">{error}</span>}
+          </form>
+        )}
+      </div>
     );
   }
 
